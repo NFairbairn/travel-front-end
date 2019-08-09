@@ -25,10 +25,6 @@ const styles = StyleSheet.create({
   },
 });
 
-function getPhotos() {
-  
-}
-
 export default class PhotoGallery extends React.Component {
   constructor(){
     super()

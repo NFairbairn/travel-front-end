@@ -7,11 +7,46 @@ import {
   View,
 } from 'react-native';
 
-import { Header, Text, Tile } from 'react-native-elements'
+import { Header, Text, Card, Image, Tile } from 'react-native-elements'
 
 // import { MonoText } from '../components/StyledText';
 
-export default function FeedScreen() {
+export default class FeedScreen extends React.Component {
+
+    constructor() {
+      super()
+      this.state = {
+        posts: []
+      }
+    }
+
+
+    componentDidMount() {
+      fetch("https://travel-back-end.herokuapp.com/posts")
+      .then(r => r.json())
+      .then(data => this.setState({
+        posts: data
+      }))
+    }
+
+    renderPosts = (posts) => {
+      return posts.map((post, idx) => {
+        // console.log(post.images[0].uri)
+        return <View key={idx} style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+          <Tile 
+            imageSrc={{uri: post.images[0].uri}}
+            title={post.title}
+            featured
+            contentContainerStyle={{ height: 70 }}
+            caption={post.content}
+            activeOpacity={1}
+          />
+        </View>
+      })
+    }
+
+  render() {
+
   return (
     <View style={styles.container}>
       <Header
@@ -19,40 +54,11 @@ export default function FeedScreen() {
         centerComponent={{ text: 'WANDR', style: { color: '#fff' } }}
       />
       <ScrollView>
-        <Tile 
-          title={"San Fran"} 
-          featured 
-          imageSrc={{uri: "https://www.sftravel.com/sites/sftraveldev.prod.acquia-sites.com/files/SanFrancisco_0.jpg"}} 
-          caption={"This is my blog about San Fran."}
-          activeOpacity={1}
-          />
-
-        <Tile 
-          title={"New York"}  
-          featured 
-          imageSrc={{uri: "https://www.gannett-cdn.com/media/2018/12/15/USATODAY/usatsports/MotleyFool-TMOT-657f0436-21e9af86.jpg"}}
-          caption={"This is my blog about New York."}
-          activeOpacity={1}
-          />
-
-        <Tile 
-          title={"Denver"} 
-          featured 
-          imageSrc={{uri: "https://prod-marketing-greenhouse.global.ssl.fastly.net/blog-assets/denver.jpg?mtime=20180926010150"}} 
-          caption={"This is my blog about Denver."}
-          activeOpacity={1}
-          />
-
-        <Tile 
-          title={"Seattle"}  
-          featured 
-          imageSrc={{uri: "https://upload.wikimedia.org/wikipedia/commons/e/e3/Seattle_Kerry_Park_Skyline.jpg"}}
-          caption={"This is my blog about Seattle."}
-          activeOpacity={1}
-          />
+        {this.renderPosts(this.state.posts)}
       </ScrollView>
     </View>
-  );
+  ); 
+  }
 }
 
 FeedScreen.navigationOptions = {

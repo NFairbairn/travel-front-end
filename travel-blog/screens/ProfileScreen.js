@@ -2,11 +2,45 @@ import React from 'react';
 
 import { View, ImageBackground, ScrollView } from 'react-native'
 
-import { Avatar, Tile, Text } from 'react-native-elements'
+import { Avatar, Tile, Text, Card } from 'react-native-elements'
 // import { ScrollView } from 'react-native-gesture-handler';
 // import { ExpoConfigView } from '@expo/samples';
 
 export default class ProfileScreen extends React.Component {
+
+  constructor() {
+    super()
+    this.state = {
+      posts: []
+    }
+  }
+
+  componentDidMount() {
+    fetch("https://travel-back-end.herokuapp.com/posts")
+    .then(r => r.json())
+    .then(data => this.setState({
+      posts: data
+    }))
+  }
+
+  filterPosts = (posts) => {
+    let filtered = posts.filter((post) => post.blog_id === 1)
+    return filtered.map((post, idx) => {
+      return <Tile 
+      key={idx}
+      imageSrc={{uri: post.images[0].uri}}
+      title={post.title}
+      featured
+      contentContainerStyle={{ height: 70 }}
+      caption={post.content}
+      activeOpacity={1}
+    />
+    })
+  }
+
+
+
+
   render() {
     return (
       <ScrollView>
@@ -25,30 +59,8 @@ export default class ProfileScreen extends React.Component {
         <Text h1 style={{alignSelf: "center"}}>
           {"My Blogs"}
         </Text>
-
-        <Tile 
-          title={"San Fran"} 
-          featured 
-          imageSrc={{uri: "https://www.sftravel.com/sites/sftraveldev.prod.acquia-sites.com/files/SanFrancisco_0.jpg"}} 
-          caption={"This is my blog about San Fran."}
-          activeOpacity={1}
-          />
-
-        <Tile 
-          title={"New York"}  
-          featured 
-          imageSrc={{uri: "https://www.gannett-cdn.com/media/2018/12/15/USATODAY/usatsports/MotleyFool-TMOT-657f0436-21e9af86.jpg"}}
-          caption={"This is my blog about New York."}
-          activeOpacity={1}
-          />
-
-        <Tile 
-          title={"Denver"} 
-          featured 
-          imageSrc={{uri: "https://prod-marketing-greenhouse.global.ssl.fastly.net/blog-assets/denver.jpg?mtime=20180926010150"}} 
-          caption={"This is my blog about Denver."}
-          activeOpacity={1}
-          />
+        {this.filterPosts(this.state.posts)}
+        
       </ScrollView>
     )
   }
