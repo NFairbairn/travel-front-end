@@ -1,70 +1,56 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import {
-  Image,
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 
-import { MonoText } from '../components/StyledText';
+import { Header, Text, Tile } from 'react-native-elements'
+
+// import { MonoText } from '../components/StyledText';
 
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}>
-        <View style={styles.welcomeContainer}>
-          <Image
-            source={
-              __DEV__
-                ? require('../assets/images/robot-dev.png')
-                : require('../assets/images/robot-prod.png')
-            }
-            style={styles.welcomeImage}
+      <Header
+        leftComponent={{icon: "search"}}
+        centerComponent={{ text: 'WANDERER', style: { color: '#fff' } }}
+      />
+      <ScrollView>
+        <Tile 
+          title={"San Fran"} 
+          featured 
+          imageSrc={{uri: "https://www.sftravel.com/sites/sftraveldev.prod.acquia-sites.com/files/SanFrancisco_0.jpg"}} 
+          caption={"This is my blog about San Fran."}
+          activeOpacity={1}
           />
-        </View>
 
-        <View style={styles.getStartedContainer}>
-          <DevelopmentModeNotice />
+        <Tile 
+          title={"New York"}  
+          featured 
+          imageSrc={{uri: "https://www.gannett-cdn.com/media/2018/12/15/USATODAY/usatsports/MotleyFool-TMOT-657f0436-21e9af86.jpg"}}
+          caption={"This is my blog about New York."}
+          activeOpacity={1}
+          />
 
-          <Text style={styles.getStartedText}>Get started by opening</Text>
+        <Tile 
+          title={"Denver"} 
+          featured 
+          imageSrc={{uri: "https://prod-marketing-greenhouse.global.ssl.fastly.net/blog-assets/denver.jpg?mtime=20180926010150"}} 
+          caption={"This is my blog about Denver."}
+          activeOpacity={1}
+          />
 
-          <View
-            style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-            <MonoText>screens/HomeScreen.js</MonoText>
-          </View>
-
-          <Text style={styles.getStartedText}>
-            Change this text and your app will automatically reload.
-          </Text>
-        </View>
-
-        <View style={styles.helpContainer}>
-          <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-            <Text style={styles.helpLinkText}>
-              Help, it didn’t automatically reload!
-            </Text>
-          </TouchableOpacity>
-        </View>
+        <Tile 
+          title={"Seattle"}  
+          featured 
+          imageSrc={{uri: "https://upload.wikimedia.org/wikipedia/commons/e/e3/Seattle_Kerry_Park_Skyline.jpg"}}
+          caption={"This is my blog about Seattle."}
+          activeOpacity={1}
+          />
       </ScrollView>
-
-      <View style={styles.tabBarInfoContainer}>
-        <Text style={styles.tabBarInfoText}>
-          This is a tab bar. You can edit it in:
-        </Text>
-
-        <View
-          style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-          <MonoText style={styles.codeHighlightText}>
-            navigation/MainTabNavigator.js
-          </MonoText>
-        </View>
-      </View>
     </View>
   );
 }
