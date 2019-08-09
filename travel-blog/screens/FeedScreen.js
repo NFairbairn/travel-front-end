@@ -11,12 +11,12 @@ import { Header, Text, Tile } from 'react-native-elements'
 
 // import { MonoText } from '../components/StyledText';
 
-export default function HomeScreen() {
+export default function FeedScreen() {
   return (
     <View style={styles.container}>
       <Header
         leftComponent={{icon: "search"}}
-        centerComponent={{ text: 'WANDERER', style: { color: '#fff' } }}
+        centerComponent={{ text: 'WANDR', style: { color: '#fff' } }}
       />
       <ScrollView>
         <Tile 
@@ -55,7 +55,7 @@ export default function HomeScreen() {
   );
 }
 
-HomeScreen.navigationOptions = {
+FeedScreen.navigationOptions = {
   header: null,
 };
 

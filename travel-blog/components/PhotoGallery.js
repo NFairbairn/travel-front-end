@@ -9,6 +9,7 @@ import {
 
 import * as ImagePicker from "expo-image-picker"
 import * as Permissions from 'expo-permissions'
+import { ScrollView } from 'react-native-gesture-handler';
 
 const styles = StyleSheet.create({
   container: {
@@ -24,28 +25,49 @@ const styles = StyleSheet.create({
   },
 });
 
+function getPhotos() {
+  
+}
+
 export default class PhotoGallery extends React.Component {
   constructor(){
     super()
     this.state = {
-      image: null
+      images: []
     }
+  }
+
+  componentDidMount() {
+    fetch("https://travel-back-end.herokuapp.com/images")
+    .then(r => r.json())
+    .then(data => this.setState({
+      images: data
+    }))
+  }
+
+  displayImages = (images) => {
+    return images.map((image, idx) => {
+      return <Image key={idx} style={styles.image} source={{uri: image.uri}}/>
+    })
   }
 
   selectPicture = async () => {
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    const { cancelled, uri } = await ImagePicker.launchImageLibraryAsync({ aspect: 1, allowsEditing: true });
+    const image = await ImagePicker.launchImageLibraryAsync({ aspect: 1, allowsEditing: true });
+    let all = this.state.images
+    all.push(image)
     this.setState({
-      image: uri
+      images: all
     })
-    console.log(this.state.image)
   }
 
   takePicture = async () => {
     await Permissions.askAsync(Permissions.CAMERA);
-    const { cancelled, uri } = await ImagePicker.launchCameraAsync({ allowsEditing: false });
+    const image = await ImagePicker.launchCameraAsync({ aspect: 1, allowsEditing: true });
+    let all = this.state.images
+    all.push(image)
     this.setState({
-      image: uri
+      images: all
     })
     
   }
@@ -53,10 +75,9 @@ export default class PhotoGallery extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image 
-          style={styles.image}
-          source={{uri: this.state.image}}
-        />
+        <ScrollView horizontal>
+          {this.displayImages(this.state.images)}
+        </ScrollView>
         <View>
           <Button onPress={this.selectPicture} title={"Gallery"}>
           </Button>
