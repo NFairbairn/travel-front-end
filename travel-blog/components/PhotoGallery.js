@@ -75,7 +75,7 @@ export default class PhotoGallery extends React.Component {
           {this.displayImages(this.state.images)}
         </ScrollView>
         <View>
-          <Button onPress={this.selectPicture} title={"Gallery"}>
+          <Button onPress={this.selectPicture} title={"Add to Gallery"}>
           </Button>
           <Button onPress={this.takePicture} title={"Take a Photo"}>
           </Button>

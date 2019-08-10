@@ -17,8 +17,7 @@ export default class FeedScreen extends React.Component {
       super()
       this.state = {
         posts: [],
-        search: "",
-        isHidden: true
+        search: ""
       }
     }
 
@@ -51,12 +50,17 @@ export default class FeedScreen extends React.Component {
       })
     }
 
+  // search bar component TODO figure out how to conditionally render this when you click the
+  // search icon in the header
+
+  //   
+
   render() {
 
   return (
     <View style={styles.container}>
       <Header
-        leftComponent={{icon: "search"}}
+        // leftComponent={{icon: "search"} onPress={this.handlepress}}
         centerComponent={{ text: 'WANDR', style: { color: 'black' } }}
         backgroundColor={"white"}
       />
@@ -64,6 +68,7 @@ export default class FeedScreen extends React.Component {
         placeholder={"search"}
         onChangeText={this.updateSearch}
         value={this.state.search}
+        lightTheme
       />
       <ScrollView>
         {this.renderPosts(this.state.posts)}

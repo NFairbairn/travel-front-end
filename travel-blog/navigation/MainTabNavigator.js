@@ -4,8 +4,9 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import FeedScreen from '../screens/FeedScreen';
-import GalleryScreen from '../screens/Gallery';
+// import GalleryScreen from '../screens/Gallery';
 import ProfileScreen from '../screens/ProfileScreen';
+import NewPostScreen from '../screens/NewPostScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -31,21 +32,21 @@ FeedStack.navigationOptions = {
 
 FeedStack.path = '';
 
-const GalleryStack = createStackNavigator(
+const NewPostStack = createStackNavigator(
   {
-    Gallery: GalleryScreen,
+    NewPost: NewPostScreen,
   },
   config
 );
 
-GalleryStack.navigationOptions = {
-  tabBarLabel: 'Gallery',
+NewPostStack.navigationOptions = {
+  tabBarLabel: 'New Post',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={"ios-image"} />
+    <TabBarIcon focused={focused} name={"ios-add"} />
   ),
 };
 
-GalleryStack.path = '';
+NewPostStack.path = '';
 
 const ProfileStack = createStackNavigator(
   {
@@ -65,7 +66,7 @@ ProfileStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
   FeedStack,
-  GalleryStack,
+  NewPostStack,
   ProfileStack,
 });
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { View, ImageBackground, ScrollView } from 'react-native'
 
-import { Avatar, Tile, Text, Card } from 'react-native-elements'
+import { Avatar, Tile, Text, Button } from 'react-native-elements'
 // import { ScrollView } from 'react-native-gesture-handler';
 // import { ExpoConfigView } from '@expo/samples';
 
@@ -11,7 +11,8 @@ export default class ProfileScreen extends React.Component {
   constructor() {
     super()
     this.state = {
-      posts: []
+      posts: [],
+      blog: ""
     }
   }
 
@@ -21,6 +22,10 @@ export default class ProfileScreen extends React.Component {
     .then(data => this.setState({
       posts: data
     }))
+  }
+
+  handlePress = () => {
+    console.log()
   }
 
   filterPosts = (posts) => {
@@ -56,8 +61,10 @@ export default class ProfileScreen extends React.Component {
         </ImageBackground>
       </View>
 
+        <Button onPress={this.handlePress} title={"New Blog"} style={{height: 100}}></Button>
+
         <Text h1 style={{alignSelf: "center"}}>
-          {"My Blogs"}
+          {"My Posts"}
         </Text>
         {this.filterPosts(this.state.posts)}
         
