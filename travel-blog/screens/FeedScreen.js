@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 
-import { Header, Text, Card, Image, Tile } from 'react-native-elements'
+import { Header, Text, Card, Image, Tile, SearchBar } from 'react-native-elements'
 
 // import { MonoText } from '../components/StyledText';
 
@@ -16,8 +16,14 @@ export default class FeedScreen extends React.Component {
     constructor() {
       super()
       this.state = {
-        posts: []
+        posts: [],
+        search: "",
+        isHidden: true
       }
+    }
+
+    updateSearch = (search) => {
+      this.setState({search})
     }
 
 
@@ -51,7 +57,13 @@ export default class FeedScreen extends React.Component {
     <View style={styles.container}>
       <Header
         leftComponent={{icon: "search"}}
-        centerComponent={{ text: 'WANDR', style: { color: '#fff' } }}
+        centerComponent={{ text: 'WANDR', style: { color: 'black' } }}
+        backgroundColor={"white"}
+      />
+      <SearchBar
+        placeholder={"search"}
+        onChangeText={this.updateSearch}
+        value={this.state.search}
       />
       <ScrollView>
         {this.renderPosts(this.state.posts)}
