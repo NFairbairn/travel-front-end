@@ -49,7 +49,7 @@ export default class ProfileScreen extends React.Component {
   render() {
     return (
       <ScrollView>
-      <View style={{height: 200, width: undefined}}>
+      <View style={{height: 300, width: undefined}}>
         <ImageBackground source={{uri: "https://upload.wikimedia.org/wikipedia/commons/e/eb/Mount_Rainier_from_west.jpg"}} style={{width: '100%', height: '100%'}}>
         <View style={{flex: 1, justifyContent: 'flex-end', alignItems: 'flex-start'}}>
           <Avatar 
@@ -60,8 +60,6 @@ export default class ProfileScreen extends React.Component {
           </View>
         </ImageBackground>
       </View>
-
-        <Button onPress={this.handlePress} title={"New Blog"} style={{height: 100}}></Button>
 
         <Text h1 style={{alignSelf: "center"}}>
           {"My Posts"}

@@ -13,8 +13,13 @@ export default class NewPostScreen extends React.Component {
         this.state = {
             title: "",
             preview: "",
-            content: ""
+            content: "",
+            images: []
         }
+    }
+
+    setImages = (images) => {
+        this.setState({images})
     }
 
     handlePress = () => {
@@ -29,45 +34,64 @@ export default class NewPostScreen extends React.Component {
                 preview: this.state.preview,
                 content: this.state.content,
                 blog_id: 1,
-                location_id: 1
+                location_id: 1,
+                images: this.state.images
             })
         })
         .then(r => r.json())
-        .then(data => console.log(data))
+        .then(this.setState({
+            title: "",
+            preview: "",
+            content: "",
+            images: []
+        }))
+        .then(this.props.navigation.navigate("Feed"))
     }
  
     render() {
         return (
             <ScrollView>
-
-                <Text>{"Title:"}</Text>
                 <TextInput 
-                style={{height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 5}}
-                onChangeText={(title) => this.setState({title})}
-                value={this.state.title}
+                    style={{
+                        height: 40, 
+                        width: '90%', 
+                        alignSelf: "center", 
+                        borderColor: 'gray', 
+                        borderWidth: 1, 
+                        marginBottom: 20,
+                        marginTop: 30,
+                        borderRadius: 5
+                    }}
+                    onChangeText={(title) => this.setState({title})}
+                    value={this.state.title}
+                    placeholder={"  Title"}
                 />
 
-                <Text>{"Preview:"}</Text>
                 <TextInput 
-                style={{height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 5}}
-                onChangeText={(preview) => this.setState({preview})}
-                value={this.state.preview}
-                />
-
-
-                <Text>{"Content:"}</Text>
-                <TextInput 
-                style={{height: 300, borderColor: 'gray', borderWidth: 1, marginBottom: 3}}
-                onChangeText={(content) => this.setState({content})}
-                value={this.state.content}
-                multiline={true}
-                numberOfLines={100}
-
+                    style={{
+                        height: 200, 
+                        width: '90%', 
+                        alignSelf: "center",
+                        borderColor: 'gray', 
+                        borderWidth: 1, 
+                        marginBottom: 20,
+                        borderRadius: 5
+                    }}
+                    onChangeText={(content) => this.setState({content})}
+                    value={this.state.content}
+                    multiline={true}
+                    numberOfLines={100}
+                    placeholder={"  Tell me about it..."}
                 />
                 
-                <PhotoGallery />
+                <PhotoGallery setImages={this.setImages} images={this.state.images}/>
                 
-                <Button title="Submit" onPress={this.handlePress} style={{marginTop: 30}}/>
+                <Button 
+                    title="Submit" 
+                    onPress={this.handlePress} 
+                    buttonStyle={{borderRadius: 20, marginLeft: 60, marginRight: 60}} 
+                    style={{marginTop: 30}}
+                />
                 
             </ScrollView>
         )

@@ -30,7 +30,7 @@ FeedStack.navigationOptions = {
   ),
 };
 
-FeedStack.path = '';
+FeedStack.path = 'Feed';
 
 const NewPostStack = createStackNavigator(
   {

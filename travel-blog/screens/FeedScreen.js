@@ -22,7 +22,7 @@ export default class FeedScreen extends React.Component {
     }
 
     updateSearch = (search) => {
-      this.setState({search})
+      this.filterPosts(search)
     }
 
 
@@ -32,6 +32,12 @@ export default class FeedScreen extends React.Component {
       .then(data => this.setState({
         posts: data
       }))
+    }
+
+    filterPosts = (search) => {
+      let downcase = search.toLowerCase()
+      let filterSearch = this.state.posts.filter((post) => post.title.includes(downcase))
+      this.setState({posts: filterSearch})
     }
 
     renderPosts = (posts) => {
@@ -59,11 +65,6 @@ export default class FeedScreen extends React.Component {
 
   return (
     <View style={styles.container}>
-      <Header
-        // leftComponent={{icon: "search"} onPress={this.handlepress}}
-        centerComponent={{ text: 'WANDR', style: { color: 'black' } }}
-        backgroundColor={"white"}
-      />
       <SearchBar
         placeholder={"search"}
         onChangeText={this.updateSearch}
@@ -79,7 +80,7 @@ export default class FeedScreen extends React.Component {
 }
 
 FeedScreen.navigationOptions = {
-  header: null,
+  title: "WNDR",
 };
 
 function DevelopmentModeNotice() {
