@@ -76,7 +76,7 @@ export default class FeedScreen extends React.Component {
     renderImages = (post) => {
       if (post.title) {
       return post.images.map((image, idx) => {
-        return <Image key={idx} style={{height: 300, width: 300}} source={{uri: image.uri}} />
+        return <Image key={idx} style={{height: 300, width: 300, marginRight: 3}} source={{uri: image.uri}} />
       })
     } else {
       return <Text>Nope</Text>
@@ -124,13 +124,22 @@ export default class FeedScreen extends React.Component {
             <Text>{this.state.post.content}</Text>
 
             
-          </Card>
+          
 
           <ScrollView horizontal>
             {this.renderImages(this.state.post)}
           </ScrollView>
 
-          <Button title={"Close"} onPress={() => this.setState({visible: false})}></Button>
+          </Card>
+
+          <Button 
+            title={"Close"} 
+            onPress={() => this.setState({visible: false})}
+            buttonStyle={{borderRadius: 20, marginLeft: 60, marginRight: 60}}
+            style={{marginTop: 10}}
+          >
+
+          </Button>
         </View>
       </Modal>
     </View>
