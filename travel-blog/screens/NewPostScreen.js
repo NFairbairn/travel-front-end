@@ -23,7 +23,7 @@ export default class NewPostScreen extends React.Component {
     }
 
     handlePress = () => {
-        fetch(`http://localhost:3000/posts`, {
+        fetch(`https://travel-back-end.herokuapp.com/posts`, {
             method: "POST",
             headers: {
                 "Accepts": "application/json",
@@ -39,13 +39,13 @@ export default class NewPostScreen extends React.Component {
             })
         })
         .then(r => r.json())
+        .then(data => this.props.navigation.navigate("Feed", {post: data}))
         .then(this.setState({
             title: "",
             preview: "",
             content: "",
             images: []
-        }))
-        .then(this.props.navigation.navigate("Feed"))
+        }))   
     }
  
     render() {

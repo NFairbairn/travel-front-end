@@ -7,6 +7,7 @@ import FeedScreen from '../screens/FeedScreen';
 // import GalleryScreen from '../screens/Gallery';
 import ProfileScreen from '../screens/ProfileScreen';
 import NewPostScreen from '../screens/NewPostScreen';
+import ReadScreen from '../screens/ReadScreen'
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -15,7 +16,12 @@ const config = Platform.select({
 
 const FeedStack = createStackNavigator(
   {
-    Feed: FeedScreen,
+    Feed: {
+      screen: FeedScreen,
+    },
+    Read: {
+      screen: ReadScreen
+    }
   },
   config
 );

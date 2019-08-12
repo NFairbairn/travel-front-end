@@ -5,23 +5,31 @@ import {
   ScrollView,
   StyleSheet,
   View,
+  Modal,
+  Image,
+  RefreshControl
 } from 'react-native';
 
-import { Header, Text, Card, Image, Tile, SearchBar } from 'react-native-elements'
+import { Text,Tile, SearchBar, Button, Card } from 'react-native-elements'
 
 // import { MonoText } from '../components/StyledText';
 
 export default class FeedScreen extends React.Component {
 
-    constructor() {
-      super()
+    constructor(props) {
+      super(props)
       this.state = {
         posts: [],
-        search: ""
+        search: "",
+        post: {},
+        visible: false,
+        refreshing: true
       }
     }
 
     updateSearch = (search) => {
+      let downcase = search.toLowerCase()
+      this.setState({search: downcase})
       this.filterPosts(search)
     }
 
@@ -40,10 +48,16 @@ export default class FeedScreen extends React.Component {
       this.setState({posts: filterSearch})
     }
 
+    handlePress = (post) => {
+      this.setState({
+        post: post,
+        visible: true
+      })
+    }
+
     renderPosts = (posts) => {
       return posts.map((post, idx) => {
-        // console.log(post.images[0].uri)
-        return <View key={idx} style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+        return <View key={idx} style={{ flex: 1, flexDirection: 'row'}}>
           <Tile 
             imageSrc={{uri: post.images[0].uri}}
             title={post.title}
@@ -51,15 +65,34 @@ export default class FeedScreen extends React.Component {
             contentContainerStyle={{ height: 70 }}
             caption={post.content}
             activeOpacity={1}
+            onPress={() => this.handlePress(post)}
           />
         </View>
       })
+    }
+
+    
+
+    renderImages = (post) => {
+      if (post.title) {
+      return post.images.map((image, idx) => {
+        return <Image key={idx} style={{height: 300, width: 300}} source={{uri: image.uri}} />
+      })
+    } else {
+      return <Text>Nope</Text>
+    }
     }
 
   // search bar component TODO figure out how to conditionally render this when you click the
   // search icon in the header
 
   //   
+
+  _onRefresh = () => {
+    fetch("https://travel-back-end.herokuapp.com/posts")
+      .then(r => r.json())
+      .then(data => this.setState({posts: data}))
+  }
 
   render() {
 
@@ -71,9 +104,35 @@ export default class FeedScreen extends React.Component {
         value={this.state.search}
         lightTheme
       />
-      <ScrollView>
+      <ScrollView refreshControl={<RefreshControl refreshing={false} onRefresh={this._onRefresh}/>}>
         {this.renderPosts(this.state.posts)}
       </ScrollView>
+
+      <Modal 
+      visible={this.state.visible}
+      presentationStyle={"overFullScreen"}
+      >
+        <View style={{
+          flex: 1,
+          flexDirection: 'column',
+          justifyContent: 'center'}}>
+          
+          <Card 
+            title={this.state.post.title}
+            style={{width: 300, height: 500}}
+          >
+            <Text>{this.state.post.content}</Text>
+
+            
+          </Card>
+
+          <ScrollView horizontal>
+            {this.renderImages(this.state.post)}
+          </ScrollView>
+
+          <Button title={"Close"} onPress={() => this.setState({visible: false})}></Button>
+        </View>
+      </Modal>
     </View>
   ); 
   }
@@ -120,7 +179,7 @@ function handleHelpPress() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1,  
     backgroundColor: '#fff',
   },
   developmentModeText: {

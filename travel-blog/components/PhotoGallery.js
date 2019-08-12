@@ -9,7 +9,7 @@ import {
 import * as ImagePicker from "expo-image-picker"
 import * as Permissions from 'expo-permissions'
 import { ScrollView } from 'react-native-gesture-handler';
-import { Button } from 'react-native-elements'
+import { Button, Icon } from 'react-native-elements'
 
 const styles = StyleSheet.create({
   container: {
@@ -65,18 +65,21 @@ export default class PhotoGallery extends React.Component {
     return (
       <View style={styles.container}>
         
-        <View>
-          
-            <Button 
+        <View style={{flex: 1, flexDirection: 'row'}}>
+            <Icon 
             onPress={this.selectPicture} 
-            title={"Add to Gallery"}
-            buttonStyle={{borderRadius: 20, marginLeft: 60, marginRight: 60, marginBottom: 5}} 
+            style={{borderRadius: 20, marginLeft: 5, marginRight: 25, marginBottom: 5}} 
+            name={"image"}
+            type={"ion-icon"}
+            size={36}
             />
-
-            <Button 
+            
+            <Icon 
             onPress={this.takePicture} 
-            buttonStyle={{borderRadius: 20, marginLeft: 60, marginRight: 60, marginBottom: 5}} 
-            title={"Take a Photo"}
+            style={{borderRadius: 20, marginLeft: 5, marginRight: 60, marginBottom: 5}} 
+            name={"device-camera"}
+            type={"octicon"}
+            size={36}
             />
         </View>
           
