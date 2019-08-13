@@ -31,14 +31,6 @@ export default class PhotoGallery extends React.Component {
     super(props)
   }
 
-  // componentDidMount() {
-  //   fetch("https://travel-back-end.herokuapp.com/images")
-  //   .then(r => r.json())
-  //   .then(data => this.setState({
-  //     images: data
-  //   }))
-  // }
-
   displayImages = (images) => {
     return images.map((image, idx) => {
       return <Image key={idx} style={styles.image} source={{uri: image.uri}}/>
@@ -68,7 +60,7 @@ export default class PhotoGallery extends React.Component {
         <View style={{flex: 1, flexDirection: 'row'}}>
             <Icon 
             onPress={this.selectPicture} 
-            style={{borderRadius: 20, marginLeft: 5, marginRight: 25, marginBottom: 5}} 
+            style={{marginLeft: 5, marginRight: 25, marginBottom: 5}} 
             name={"image"}
             type={"ion-icon"}
             size={36}
@@ -76,7 +68,7 @@ export default class PhotoGallery extends React.Component {
             
             <Icon 
             onPress={this.takePicture} 
-            style={{borderRadius: 20, marginLeft: 5, marginRight: 60, marginBottom: 5}} 
+            style={{marginLeft: 5, marginRight: 60, marginBottom: 5}} 
             name={"device-camera"}
             type={"octicon"}
             size={36}

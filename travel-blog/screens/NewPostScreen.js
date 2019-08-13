@@ -31,7 +31,7 @@ export default class NewPostScreen extends React.Component {
             },
             body: JSON.stringify({
                 title: this.state.title,
-                preview: this.state.preview,
+                preview: this.state.content.slice(0, 100),
                 content: this.state.content,
                 blog_id: 1,
                 location_id: 1,
