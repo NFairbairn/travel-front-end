@@ -76,7 +76,7 @@ export default class FeedScreen extends React.Component {
     renderImages = (post) => {
       if (post.title) {
       return post.images.map((image, idx) => {
-        return <Image key={idx} style={{height: 300, width: 300, marginRight: 3}} source={{uri: image.uri}} />
+        return <Image key={idx} style={{height: 400, width: 400, marginRight: 3}} source={{uri: image.uri}} />
       })
     } else {
       return <Text>Nope</Text>
@@ -112,23 +112,17 @@ export default class FeedScreen extends React.Component {
       visible={this.state.visible}
       presentationStyle={"overFullScreen"}
       >
-        <View style={{
-          flex: 1,
-          flexDirection: 'column',
-          justifyContent: 'center'}}>
+        <View>
+
+          <ScrollView horizontal>
+            {this.renderImages(this.state.post)}
+          </ScrollView>
           
           <Card 
             title={this.state.post.title}
             style={{width: 300, height: 500}}
           >
-            <Text>{this.state.post.content}</Text>
-
-            
-          
-
-          <ScrollView horizontal>
-            {this.renderImages(this.state.post)}
-          </ScrollView>
+          <Text>{this.state.post.content}</Text>
 
           </Card>
 
