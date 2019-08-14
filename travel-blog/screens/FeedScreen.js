@@ -43,7 +43,7 @@ export default class FeedScreen extends React.Component {
     }
 
     filterPosts = (search) => {
-      if (search.length !== 1 ) {
+      if (search.length !== 1) {
       let downcase = search.toLowerCase()
       let filterSearch = this.state.posts.filter((post) => post.title.toLowerCase().includes(downcase))
       this.setState({posts: filterSearch})
@@ -119,7 +119,8 @@ export default class FeedScreen extends React.Component {
         placeholder={"search"}
         onChangeText={this.updateSearch}
         value={this.state.search}
-        lightTheme
+        containerStyle={{backgroundColor: "white", borderColor: "white", borderBottomWidth: 0, borderTopWidth: 0}}
+        inputContainerStyle={{backgroundColor: "white", marginLeft: 0, marginRight: 0}}
       />
       <ScrollView refreshControl={<RefreshControl refreshing={false} onRefresh={this._onRefresh}/>}>
         {this.renderPosts(this.state.posts)}

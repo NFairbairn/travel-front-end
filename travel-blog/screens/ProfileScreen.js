@@ -149,6 +149,7 @@ export default class ProfileScreen extends React.Component {
             onPress={() => this.handleDelete(this.state.post)}
             buttonStyle={{borderRadius: 20, marginLeft: 60, marginRight: 60}}
             style={{marginTop: 20, marginBottom: 60}}
+            type="outline"
           />
 
         
