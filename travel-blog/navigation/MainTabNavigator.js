@@ -8,6 +8,9 @@ import FeedScreen from '../screens/FeedScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import NewPostScreen from '../screens/NewPostScreen';
 import ReadScreen from '../screens/ReadScreen'
+import Colors from '../constants/Colors';
+
+import { Icon } from "react-native-elements"
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -29,9 +32,11 @@ const FeedStack = createStackNavigator(
 FeedStack.navigationOptions = {
   tabBarLabel: 'Feed',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon
+    <Icon
       focused={focused}
-      name={'ios-paper'}
+      name={'reorder'}
+      type={"ion-icon"}
+      color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
     />
   ),
 };

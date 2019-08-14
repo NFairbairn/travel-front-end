@@ -43,9 +43,13 @@ export default class FeedScreen extends React.Component {
     }
 
     filterPosts = (search) => {
+      if (search.length !== 1 ) {
       let downcase = search.toLowerCase()
-      let filterSearch = this.state.posts.filter((post) => post.title.includes(downcase))
+      let filterSearch = this.state.posts.filter((post) => post.title.toLowerCase().includes(downcase))
       this.setState({posts: filterSearch})
+      } else {
+        this._onRefresh()
+      }
     }
 
     handlePress = (post) => {
@@ -94,6 +98,19 @@ export default class FeedScreen extends React.Component {
       .then(data => this.setState({posts: data}))
   }
 
+  handleDelete = (post) => {
+    fetch(`https://travel-back-end.herokuapp.com/posts/${post.id}`, {
+      method: "DELETE",
+      headers: {
+        "Accepts": "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+    .then(r => r.json())
+    .then(data => this.setState({posts: data}))
+    .then(this.setState({visible: false}))
+  }
+
   render() {
 
   return (
@@ -112,7 +129,7 @@ export default class FeedScreen extends React.Component {
         visible={this.state.visible}
         presentationStyle={"overFullScreen"}
       >
-        <View>
+        <ScrollView>
 
           <ScrollView horizontal>
             {this.renderImages(this.state.post)}
@@ -131,11 +148,18 @@ export default class FeedScreen extends React.Component {
             title={"Close"} 
             onPress={() => this.setState({visible: false})}
             buttonStyle={{borderRadius: 20, marginLeft: 60, marginRight: 60}}
-            style={{marginTop: 30}}
+            style={{marginTop: 20}}
           />
 
+          <Button 
+            title={"Delete"}
+            onPress={() => this.handleDelete(this.state.post)}
+            buttonStyle={{borderRadius: 20, marginLeft: 60, marginRight: 60}}
+            style={{marginTop: 20, marginBottom: 60}}
+            type="outline"
+          />
         
-        </View>
+        </ScrollView>
       </Modal>
     </View>
   ); 
@@ -145,12 +169,6 @@ export default class FeedScreen extends React.Component {
 FeedScreen.navigationOptions = {
   title: "WNDR",
 };
-
-
-
-
-
-
 
 const styles = StyleSheet.create({
   container: {

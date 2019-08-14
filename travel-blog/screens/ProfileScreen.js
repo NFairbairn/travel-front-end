@@ -82,6 +82,19 @@ export default class ProfileScreen extends React.Component {
   }
   }
 
+  handleDelete = (post) => {
+    fetch(`https://travel-back-end.herokuapp.com/posts/${post.id}`, {
+      method: "DELETE",
+      headers: {
+        "Accepts": "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+    .then(r => r.json())
+    .then(data => this.setState({posts: data}))
+    .then(this.setState({visible: false}))
+  }
+
 
 
   render() {
@@ -106,10 +119,10 @@ export default class ProfileScreen extends React.Component {
       </ScrollView>
 
       <Modal 
-      visible={this.state.visible}
-      presentationStyle={"overFullScreen"}
+        visible={this.state.visible}
+        presentationStyle={"overFullScreen"}
       >
-        <View>
+        <ScrollView>
 
           <ScrollView horizontal>
             {this.renderImages(this.state.post)}
@@ -128,11 +141,18 @@ export default class ProfileScreen extends React.Component {
             title={"Close"} 
             onPress={() => this.setState({visible: false})}
             buttonStyle={{borderRadius: 20, marginLeft: 60, marginRight: 60}}
-            style={{marginTop: 30}}
+            style={{marginTop: 20}}
+          />
+
+          <Button 
+            title={"Delete"}
+            onPress={() => this.handleDelete(this.state.post)}
+            buttonStyle={{borderRadius: 20, marginLeft: 60, marginRight: 60}}
+            style={{marginTop: 20, marginBottom: 60}}
           />
 
         
-        </View>
+        </ScrollView>
       </Modal>
          
         
