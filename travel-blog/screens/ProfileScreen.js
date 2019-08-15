@@ -3,8 +3,6 @@ import React from 'react';
 import { View, ImageBackground, ScrollView, RefreshControl, Modal, Image } from 'react-native'
 
 import { Avatar, Tile, Text, Button, Divider, Icon } from 'react-native-elements'
-// import { ScrollView } from 'react-native-gesture-handler';
-// import { ExpoConfigView } from '@expo/samples';
 
 export default class ProfileScreen extends React.Component {
 

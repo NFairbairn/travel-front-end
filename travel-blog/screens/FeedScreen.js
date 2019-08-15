@@ -12,7 +12,6 @@ import {
 
 import { Text,Tile, SearchBar, Button, Card, Divider } from 'react-native-elements'
 
-// import { MonoText } from '../components/StyledText';
 
 export default class FeedScreen extends React.Component {
 
@@ -23,14 +22,15 @@ export default class FeedScreen extends React.Component {
         search: "",
         post: {},
         visible: false,
-        refreshing: true
+        refreshing: true,
+        filteredPosts: []
       }
     }
 
     updateSearch = (search) => {
       let downcase = search.toLowerCase()
       this.setState({search: downcase})
-      this.filterPosts(this.state.search)
+      this.filterPosts(search)
     }
 
 
@@ -38,18 +38,16 @@ export default class FeedScreen extends React.Component {
       fetch("https://travel-back-end.herokuapp.com/posts")
       .then(r => r.json())
       .then(data => this.setState({
-        posts: data
+        posts: data,
+        filteredPosts: data
       }))
     }
 
     filterPosts = (search) => {
-      if (search.length !== 1) {
       let downcase = search.toLowerCase()
-      let filterSearch = this.state.posts.filter((post) => post.title.toLowerCase().includes(downcase))
-      this.setState({posts: filterSearch})
-      } else {
-        this._onRefresh()
-      }
+      let filtered = this.state.posts.filter((post) => post.title.toLowerCase().includes(downcase))
+
+      this.setState({filteredPosts: filtered})
     }
 
     handlePress = (post) => {
@@ -87,15 +85,11 @@ export default class FeedScreen extends React.Component {
     }
     }
 
-  // search bar component TODO figure out how to conditionally render this when you click the
-  // search icon in the header
-
-  //   
 
   _onRefresh = () => {
     fetch("https://travel-back-end.herokuapp.com/posts")
       .then(r => r.json())
-      .then(data => this.setState({posts: data}))
+      .then(data => this.setState({filteredPosts: data}))
   }
 
   handleDelete = (post) => {
@@ -107,7 +101,7 @@ export default class FeedScreen extends React.Component {
       }
     })
     .then(r => r.json())
-    .then(data => this.setState({posts: data}))
+    .then(data => this.setState({filteredPosts: data}))
     .then(this.setState({visible: false}))
   }
 
@@ -121,9 +115,10 @@ export default class FeedScreen extends React.Component {
         value={this.state.search}
         containerStyle={{backgroundColor: "white", borderColor: "white", borderBottomWidth: 0, borderTopWidth: 0}}
         inputContainerStyle={{backgroundColor: "white", marginLeft: 0, marginRight: 0}}
+        onClear={() => this.setState({search: ""})}
       />
       <ScrollView refreshControl={<RefreshControl refreshing={false} onRefresh={this._onRefresh}/>}>
-        {this.renderPosts(this.state.posts)}
+        {this.renderPosts(this.state.filteredPosts)}
       </ScrollView>
 
       <Modal 
