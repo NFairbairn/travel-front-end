@@ -1,7 +1,6 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import {
-  Platform,
   ScrollView,
   StyleSheet,
   View,
@@ -10,7 +9,9 @@ import {
   RefreshControl
 } from 'react-native';
 
-import { Text,Tile, SearchBar, Button, Card, Divider } from 'react-native-elements'
+import posed from 'react-native-pose'
+
+import { Text,Tile, SearchBar, Button, Divider, Icon } from 'react-native-elements'
 
 
 export default class FeedScreen extends React.Component {
@@ -23,7 +24,8 @@ export default class FeedScreen extends React.Component {
         post: {},
         visible: false,
         refreshing: true,
-        filteredPosts: []
+        filteredPosts: [],
+        pinnedPosts: []
       }
     }
 
@@ -105,6 +107,34 @@ export default class FeedScreen extends React.Component {
     .then(this.setState({visible: false}))
   }
 
+  // createPin = (post) => {
+  //   fetch(`https://travel-back-end.herokuapp.com/pins`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Accepts": "application/json",
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       post_id: post.id,
+  //     })
+  //   })
+  //   .then(r => r.json())
+  //   .then(pin => {
+  //     let pinned = this.state.pinnedPosts
+  //     pinned.push(pin)
+  //     this.setState({pinnedPosts: pinned})
+  //     console.log(this.state.pinnedPosts)
+  //   })
+  // }
+
+  // displayPin = (post) => {
+  //   if (post.pin) {
+  //     return <Text>has a pin</Text>
+  //   } else {
+  //     return <Text>doesnt have a pin</Text>
+  //   }
+  // }
+
   render() {
 
   return (
@@ -115,7 +145,7 @@ export default class FeedScreen extends React.Component {
         value={this.state.search}
         containerStyle={{backgroundColor: "white", borderColor: "white", borderBottomWidth: 0, borderTopWidth: 0}}
         inputContainerStyle={{backgroundColor: "white", marginLeft: 0, marginRight: 0}}
-        onClear={() => this.setState({search: ""})}
+        onClear={() => this._onRefresh()}
       />
       <ScrollView refreshControl={<RefreshControl refreshing={false} onRefresh={this._onRefresh}/>}>
         {this.renderPosts(this.state.filteredPosts)}
@@ -140,7 +170,7 @@ export default class FeedScreen extends React.Component {
           
           </ScrollView>
 
-          <Button 
+          {/* <Button 
             title={"Close"} 
             onPress={() => this.setState({visible: false})}
             buttonStyle={{borderRadius: 20, marginLeft: 60, marginRight: 60}}
@@ -153,7 +183,32 @@ export default class FeedScreen extends React.Component {
             buttonStyle={{borderRadius: 20, marginLeft: 60, marginRight: 60}}
             style={{marginTop: 20, marginBottom: 60}}
             type="outline"
-          />
+          /> */}
+
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-around", position: "fixed", marginBottom: 40, marginTop: 40}}>
+      
+          <Icon 
+            name={"trashcan"}
+            type={"octicon"}
+            onPress={() => this.handleDelete(this.state.post)}
+            size={30}
+            />
+
+            <Icon 
+            name={"x"}
+            type={"octicon"}
+            onPress={() => this.setState({visible: false})}
+            size={30}
+            />  
+
+            {/* <Icon 
+            name={"pin"}
+            type={"octicon"}
+            onPress={() => console.log("pin me blazer")}
+            size={30}
+            /> */}
+
+          </View>
         
         </ScrollView>
       </Modal>

@@ -135,7 +135,7 @@ export default class ProfileScreen extends React.Component {
           
           </ScrollView>
 
-          <Button 
+          {/* <Button 
             title={"Close"} 
             onPress={() => this.setState({visible: false})}
             buttonStyle={{borderRadius: 20, marginLeft: 60, marginRight: 60}}
@@ -148,7 +148,32 @@ export default class ProfileScreen extends React.Component {
             buttonStyle={{borderRadius: 20, marginLeft: 60, marginRight: 60}}
             style={{marginTop: 20, marginBottom: 60}}
             type="outline"
-          />
+          /> */}
+
+<View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-around", position: "fixed", marginBottom: 40, marginTop: 40}}>
+      
+      <Icon 
+        name={"trashcan"}
+        type={"octicon"}
+        onPress={() => this.handleDelete(this.state.post)}
+        size={30}
+        />
+
+        <Icon 
+        name={"x"}
+        type={"octicon"}
+        onPress={() => this.setState({visible: false})}
+        size={30}
+        />  
+
+        {/* <Icon 
+        name={"pin"}
+        type={"octicon"}
+        onPress={() => console.log("pin me blazer")}
+        size={30}
+        /> */}
+
+      </View>
 
         
         </ScrollView>

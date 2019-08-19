@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
   },
   image: {
     borderWidth: 4,
-    borderColor: '#d6d7da',
+    borderColor: 'white',
+    borderRadius: 4,
     height: 200,
     width: 340
   },
@@ -41,41 +42,43 @@ export default class PhotoGallery extends React.Component {
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
     const image = await ImagePicker.launchImageLibraryAsync({ aspect: 1, allowsEditing: true });
     let all = this.props.images
-    all.push(image)
-    this.props.setImages(all)
+    if (image.uri) {
+      all.push(image)
+      this.props.setImages(all)
+    }
   }
 
   takePicture = async () => {
     await Permissions.askAsync(Permissions.CAMERA);
     const image = await ImagePicker.launchCameraAsync({ aspect: 1, allowsEditing: true });
     let all = this.props.images
-    all.push(image)
-    this.props.setImages(all) 
+    if (image.uri) {
+      all.push(image)
+      this.props.setImages(all) 
+    }
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <View>
         
-        <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-around", position: "fixed", marginBottom: 40, marginTop: 10}}>
             <Icon 
             onPress={this.selectPicture} 
-            style={{marginLeft: 5, marginRight: 25, marginBottom: 5}} 
             name={"image"}
             type={"ion-icon"}
-            size={36}
+            size={50}
             />
             
             <Icon 
             onPress={this.takePicture} 
-            style={{marginLeft: 5, marginRight: 60, marginBottom: 5}} 
             name={"device-camera"}
             type={"octicon"}
-            size={36}
+            size={45}
             />
         </View>
           
-          <ScrollView horizontal>
+          <ScrollView horizontal style={{marginLeft: 20}}>
             {this.displayImages(this.props.images)}
           </ScrollView>
           
