@@ -9,6 +9,8 @@ import {
   RefreshControl
 } from 'react-native';
 
+import posed from 'react-native-pose'
+
 import { Text,Tile, SearchBar, Button, Divider, Icon } from 'react-native-elements'
 
 
@@ -22,7 +24,8 @@ export default class FeedScreen extends React.Component {
         post: {},
         visible: false,
         refreshing: true,
-        filteredPosts: []
+        filteredPosts: [],
+        pinnedPosts: []
       }
     }
 
@@ -104,6 +107,34 @@ export default class FeedScreen extends React.Component {
     .then(this.setState({visible: false}))
   }
 
+  // createPin = (post) => {
+  //   fetch(`https://travel-back-end.herokuapp.com/pins`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Accepts": "application/json",
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       post_id: post.id,
+  //     })
+  //   })
+  //   .then(r => r.json())
+  //   .then(pin => {
+  //     let pinned = this.state.pinnedPosts
+  //     pinned.push(pin)
+  //     this.setState({pinnedPosts: pinned})
+  //     console.log(this.state.pinnedPosts)
+  //   })
+  // }
+
+  // displayPin = (post) => {
+  //   if (post.pin) {
+  //     return <Text>has a pin</Text>
+  //   } else {
+  //     return <Text>doesnt have a pin</Text>
+  //   }
+  // }
+
   render() {
 
   return (
@@ -114,7 +145,7 @@ export default class FeedScreen extends React.Component {
         value={this.state.search}
         containerStyle={{backgroundColor: "white", borderColor: "white", borderBottomWidth: 0, borderTopWidth: 0}}
         inputContainerStyle={{backgroundColor: "white", marginLeft: 0, marginRight: 0}}
-        onClear={() => this.setState({search: ""})}
+        onClear={() => this._onRefresh()}
       />
       <ScrollView refreshControl={<RefreshControl refreshing={false} onRefresh={this._onRefresh}/>}>
         {this.renderPosts(this.state.filteredPosts)}
@@ -170,12 +201,12 @@ export default class FeedScreen extends React.Component {
             size={30}
             />  
 
-            <Icon 
+            {/* <Icon 
             name={"pin"}
             type={"octicon"}
             onPress={() => console.log("pin me blazer")}
             size={30}
-            />
+            /> */}
 
           </View>
         

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { TextInput, View, Text, ScrollView } from 'react-native'
+import { TextInput, View, Text, ScrollView, RefreshControl } from 'react-native'
 import { Button } from 'react-native-elements'
 
 import PhotoGallery from '../components/PhotoGallery'
@@ -14,7 +14,8 @@ export default class NewPostScreen extends React.Component {
             title: "",
             preview: "",
             content: "",
-            images: []
+            images: [],
+            refreshing: true
         }
     }
 
@@ -44,13 +45,24 @@ export default class NewPostScreen extends React.Component {
             title: "",
             preview: "",
             content: "",
-            images: []
+            images: [],
+            refreshing: true
         }))   
     }
+
+    _onRefresh = () => {
+        this.setState({
+            title: "",
+            preview: "",
+            content: "",
+            images: [],
+            refreshing: true
+        })
+      }
  
     render() {
         return (
-            <ScrollView>
+            <ScrollView refreshControl={<RefreshControl refreshing={false} onRefresh={this._onRefresh}/>}>
                 <TextInput 
                     style={{
                         height: 40, 
@@ -90,7 +102,7 @@ export default class NewPostScreen extends React.Component {
                     title="Submit" 
                     onPress={this.handlePress} 
                     buttonStyle={{borderRadius: 20, marginLeft: 60, marginRight: 60}} 
-                    style={{marginTop: 30}}
+                    style={{marginTop: 30, marginBottom: 20}}
                 />
                 
             </ScrollView>
