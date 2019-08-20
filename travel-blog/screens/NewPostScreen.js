@@ -63,6 +63,7 @@ export default class NewPostScreen extends React.Component {
     render() {
         return (
             <ScrollView refreshControl={<RefreshControl refreshing={false} onRefresh={this._onRefresh}/>}>
+                <Text style={{marginLeft: 20, marginTop: 15}}>Title</Text>
                 <TextInput 
                     style={{
                         height: 40, 
@@ -71,14 +72,14 @@ export default class NewPostScreen extends React.Component {
                         borderColor: 'gray', 
                         borderWidth: 1, 
                         marginBottom: 20,
-                        marginTop: 30,
+                        // marginTop: 30,
                         borderRadius: 5
                     }}
                     onChangeText={(title) => this.setState({title})}
                     value={this.state.title}
                     placeholder={"  Title"}
                 />
-
+                <Text style={{marginLeft: 20, marginTop: 15}}>Content</Text>
                 <TextInput 
                     style={{
                         height: 200, 

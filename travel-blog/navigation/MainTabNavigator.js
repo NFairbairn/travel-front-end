@@ -30,12 +30,11 @@ const FeedStack = createStackNavigator(
 );
 
 FeedStack.navigationOptions = {
-  tabBarLabel: 'Feed',
+  tabBarLabel: ' ',
   tabBarIcon: ({ focused }) => (
-    <Icon
+    <TabBarIcon
       focused={focused}
-      name={'reorder'}
-      type={"ion-icon"}
+      name={'md-menu'}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
     />
   ),
@@ -51,9 +50,9 @@ const NewPostStack = createStackNavigator(
 );
 
 NewPostStack.navigationOptions = {
-  tabBarLabel: 'New Post',
+  tabBarLabel: ' ',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={"ios-add"} />
+    <TabBarIcon focused={focused} name={"md-create"} />
   ),
 };
 
@@ -67,7 +66,7 @@ const ProfileStack = createStackNavigator(
 );
 
 ProfileStack.navigationOptions = {
-  tabBarLabel: 'Profile',
+  tabBarLabel: ' ',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon focused={focused} name={'ios-contact'} />
   ),

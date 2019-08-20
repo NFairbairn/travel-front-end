@@ -3,7 +3,8 @@ import React from 'react'
 import {
   StyleSheet,
   View,
-  Image
+  Image,
+  Text
 } from 'react-native'
 
 import * as ImagePicker from "expo-image-picker"
@@ -33,9 +34,13 @@ export default class PhotoGallery extends React.Component {
   }
 
   displayImages = (images) => {
+    if (images.length !== 0) {
     return images.map((image, idx) => {
       return <Image key={idx} style={styles.image} source={{uri: image.uri}}/>
     })
+  } else {
+    return <Text style={{marginLeft: 52.5}}>You haven't added any photos yet!</Text>
+  }
   }
 
   selectPicture = async () => {
@@ -62,7 +67,7 @@ export default class PhotoGallery extends React.Component {
     return (
       <View>
         
-        <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-around", position: "fixed", marginBottom: 40, marginTop: 10}}>
+        <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-around", position: "fixed", marginBottom: 20, marginTop: 10}}>
             <Icon 
             onPress={this.selectPicture} 
             name={"image"}
