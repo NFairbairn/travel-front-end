@@ -26,8 +26,8 @@ export default class ProfileScreen extends React.Component {
   }
 
   filterPosts = (posts) => {
-    let filtered = posts.filter((post) => post.blog_id === 1)
-    return filtered.map((post, idx) => {
+    // let filtered = posts.map((post) => post.blog_id === 1)
+    return posts.map((post, idx) => {
       return <View key={idx} style={{ flex: 1, flexDirection: 'row'}}>
                 <Tile 
                   imageSrc={{uri: post.images[0].uri}}
@@ -159,6 +159,15 @@ export default class ProfileScreen extends React.Component {
         size={30}
         />
 
+
+        <Icon 
+        name={"pin"}
+        type={"octicon"}
+        onPress={() => console.log("pin me blazer")}
+        size={30}
+        />
+
+
         <Icon 
         name={"x"}
         type={"octicon"}
@@ -166,12 +175,7 @@ export default class ProfileScreen extends React.Component {
         size={30}
         />  
 
-        {/* <Icon 
-        name={"pin"}
-        type={"octicon"}
-        onPress={() => console.log("pin me blazer")}
-        size={30}
-        /> */}
+        
 
       </View>
 

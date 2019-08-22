@@ -80,7 +80,7 @@ export default class FeedScreen extends React.Component {
     renderImages = (post) => {
       if (post.title) {
       return post.images.map((image, idx) => {
-        return <Image key={idx} style={{height: 400, width: 400}} source={{uri: image.uri}} />
+        return <Image key={idx} style={{height: 600, width: 380}} source={{uri: image.uri}} />
       })
     } else {
       return <Text>Nope</Text>
@@ -193,7 +193,14 @@ export default class FeedScreen extends React.Component {
             onPress={() => this.handleDelete(this.state.post)}
             size={30}
             />
-
+            
+            <Icon 
+            name={"pin"}
+            type={"octicon"}
+            onPress={() => console.log("pin me blazer")}
+            size={30}
+            />
+            
             <Icon 
             name={"x"}
             type={"octicon"}
@@ -201,12 +208,7 @@ export default class FeedScreen extends React.Component {
             size={30}
             />  
 
-            {/* <Icon 
-            name={"pin"}
-            type={"octicon"}
-            onPress={() => console.log("pin me blazer")}
-            size={30}
-            /> */}
+           
 
           </View>
         
